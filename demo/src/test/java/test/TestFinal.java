@@ -11,6 +11,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import globals.GlobalVariables;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import pageMethods.CartPage;
 import pageMethods.DashboardPage;
@@ -37,6 +38,7 @@ public class TestFinal {
     WishlistPage wishlistPage;
     ProductInfoPage productInfoPage;
     CartPage cartPage;
+    GlobalVariables globalVariables;
 
 @BeforeClass
     public void setup() {
@@ -47,6 +49,16 @@ public class TestFinal {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         js = (JavascriptExecutor) driver;
         homepagePage = new HomepagePage(driver);
+        registerPage = new RegisterPage(driver);
+        dashboardPage = new DashboardPage(driver);
+        logInPage = new LogInPage(driver);
+        womenPage = new WomenPage(driver);
+        salePage = new SalePage(driver);
+        menPage = new MenPage(driver);
+        wishlistPage = new WishlistPage(driver);
+        productInfoPage = new ProductInfoPage(driver);
+        cartPage = new CartPage(driver);
+        globalVariables = new GlobalVariables(driver);
     }
 
     @AfterClass
@@ -56,67 +68,36 @@ public class TestFinal {
         }
     }
 
-    String first = "Andi";
-    String last = "Hoxha";
-    String email = "andi12345hoxha@example.com";
-    String pass = "asdqwe123";
-
-    public void logIn(){
-        homepagePage.clickAccountButton();
-        logInPage=homepagePage.clickLogIn();
-        logInPage.closeOpt();
-        logInPage.fillLogIn(email, pass);
-        dashboardPage=logInPage.clickSubmit();
-    }
-
-    public void wishlist(){
-        logIn();
-        dashboardPage.clickAccountButton();
-        wishlistPage = dashboardPage.clickWishlist();
-    }
-
-    public void cart(){
-        logIn();
-        dashboardPage.clickAccountButton();
-        cartPage = dashboardPage.clickCart();
-    }
-
     @Test
     public void test1(){
         homepagePage.clickAccountButton();
         registerPage =homepagePage.clickRegisterButton();
-        Assert.assertEquals(registerPage.checkPageTitle(), "create an account","Equals");
-        registerPage.fillRegisterFields(first, last, email, pass, pass);
+        registerPage.checkPageTitle();
+        registerPage.fillRegisterFields(globalVariables.first, globalVariables.last, globalVariables.email, globalVariables.pass, globalVariables.pass);
         dashboardPage=registerPage.clickRegisterButton();
-        Assert.assertEquals(dashboardPage.matchSuccessMessage(), "Thank you for registering with Tealium Ecommerce.", "Matched");
+        dashboardPage.matchSuccessMessage();
         dashboardPage.clickAccountButton();
         dashboardPage.clickLogOut();
     }
 
     @Test
     public void test2(){
-        homepagePage.clickAccountButton();
-        logInPage=homepagePage.clickLogIn();
-        logInPage.fillLogIn(email, pass);
-        dashboardPage=logInPage.clickSubmit();
-        Assert.assertEquals(dashboardPage.getWelcomeMessage().toLowerCase(), "welcome, " + first.toLowerCase() + " " + last.toLowerCase() + "!","Matched");
+        dashboardPage =globalVariables.logIn();
+        dashboardPage.checkWelcomeMessage(globalVariables.first, globalVariables.last);
         dashboardPage.clickAccountButton();
         dashboardPage.clickLogOut();
     }
     
     @Test
     public void test3(){
-        logIn();
+        dashboardPage =globalVariables.logIn();
         womenPage=dashboardPage.hoverOnWomen();
-        String beforeHover= womenPage.getStyleUnhovered();
-        String afterHover= womenPage.getStyleHovered();
-        Assert.assertNotEquals(beforeHover, afterHover);
-
+        womenPage.checkDifferenceInStyle();
     }
 
     @Test 
     public void test4(){
-        logIn();
+        dashboardPage =globalVariables.logIn();
         salePage= dashboardPage.hoverOnSale();
         salePage.verifyOldPriceExistsInAllItems();
         salePage.verifySpecialPriceExistsInAllItems();
@@ -126,7 +107,7 @@ public class TestFinal {
 
     @Test
     public void test5(){
-        logIn();
+        dashboardPage =globalVariables.logIn();
         menPage = dashboardPage.hoverOnMale();
         menPage.clickBlackColorOption();
         menPage.checkColorIsSelected();
@@ -137,7 +118,7 @@ public class TestFinal {
 
     @Test
     public void test6(){
-        logIn();
+        dashboardPage =globalVariables.logIn();
         womenPage = dashboardPage.hoverOnWomen();
         womenPage.sortByPrice();
         womenPage.checkPricesAreSorted();
@@ -152,7 +133,7 @@ public class TestFinal {
 
     @Test
     public void test7(){
-        wishlist();
+        wishlistPage =globalVariables.wishlist();
         productInfoPage = wishlistPage.addCart();
         productInfoPage.chooseBlackColor();
         productInfoPage.chooseMSize();
@@ -169,7 +150,7 @@ public class TestFinal {
 
     @Test
     public void test8(){
-        cart();
+        cartPage =globalVariables.cart();
         cartPage.deleteFirstAndCheck();
         cartPage.deleteItem();
         cartPage.checkEmptyMessage();

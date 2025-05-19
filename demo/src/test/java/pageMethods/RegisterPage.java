@@ -6,6 +6,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import pageElement.RegisterPageElement;
 
@@ -22,10 +23,11 @@ public class RegisterPage {
         registerPageElement = new RegisterPageElement(driver);
     }
 
-    public String checkPageTitle(){
+    public void checkPageTitle(){
         wait.until(ExpectedConditions.visibilityOf(registerPageElement.pageTitle));
         String title = registerPageElement.pageTitle.getText().toLowerCase();
-        return title;
+        String titleExp = "create an account";
+        Assert.assertEquals(title, titleExp,"Didnt match");
     }
 
    public void fillRegisterFields(String firstnameVal, String lastnameVal, String emailVal, String passwordVal, String confirmPassVal) {

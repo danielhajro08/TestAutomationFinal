@@ -6,7 +6,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
+import globals.GlobalVariables;
 import pageElement.DashboardPageElement;
 
 
@@ -15,6 +17,7 @@ public class DashboardPage {
     DashboardPageElement dashboardPageElement;
     WebDriverWait wait;
     JavascriptExecutor js;
+    GlobalVariables globalVariables;
 
     public DashboardPage(WebDriver driver) {
         this.driver = driver;
@@ -23,10 +26,13 @@ public class DashboardPage {
         dashboardPageElement = new DashboardPageElement(driver);
     }
 
-    public String matchSuccessMessage(){
+    
+
+    public void matchSuccessMessage(){
         wait.until(ExpectedConditions.visibilityOf(dashboardPageElement.success));
         String successString = dashboardPageElement.success.getText();
-        return successString;
+        String expectedString = "Thank you for registering with Tealium Ecommerce.";
+        Assert.assertEquals(successString, expectedString, "Didnt match");
     }
 
     public void clickAccountButton(){
@@ -53,6 +59,12 @@ public class DashboardPage {
         String welcomeString = dashboardPageElement.welcomeMessage.getText();
         return welcomeString;
     }
+
+   public void checkWelcomeMessage(String firstName, String lastName){
+    String expected = "welcome, " + firstName.toLowerCase() + " " + lastName.toLowerCase() + "!";
+    Assert.assertEquals(getWelcomeMessage().toLowerCase(), expected, "Matched");
+}
+
 
     public WomenPage hoverOnWomen(){
         wait.until(ExpectedConditions.visibilityOf(dashboardPageElement.womenSelectHover));

@@ -98,4 +98,10 @@ public class WomenPage {
         womenPageElement.wishlistAnchor.click();
         return new WishlistPage(driver);
     }
+
+    public void checkDifferenceInStyle(){
+        String beforeHover= getStyleUnhovered();
+        String afterHover= getStyleHovered();
+        Assert.assertNotEquals(beforeHover, afterHover);
+    }
 }

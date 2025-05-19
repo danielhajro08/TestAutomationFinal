@@ -1,9 +1,7 @@
 package test;
 
 import java.time.Duration;
-
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
@@ -24,8 +22,7 @@ import pageMethods.SalePage;
 import pageMethods.WishlistPage;
 import pageMethods.WomenPage;
 
-public class TestFinal extends BaseTest{
-    WebDriver driver;
+public class TestFinal extends BaseTest {
     WebDriverWait wait;
     JavascriptExecutor js;
     HomepagePage homepagePage;
@@ -40,7 +37,7 @@ public class TestFinal extends BaseTest{
     CartPage cartPage;
     GlobalVariables globalVariables;
 
-@BeforeClass
+    @BeforeClass
     public void setup() {
         WebDriverManager.chromedriver().clearDriverCache().setup();
         driver = new ChromeDriver();
@@ -48,6 +45,7 @@ public class TestFinal extends BaseTest{
         driver.get("https://ecommerce.tealiumdemo.com/");
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         js = (JavascriptExecutor) driver;
+
         homepagePage = new HomepagePage(driver);
         registerPage = new RegisterPage(driver);
         dashboardPage = new DashboardPage(driver);
@@ -68,218 +66,258 @@ public class TestFinal extends BaseTest{
         }
     }
 
-     @Test
-public void test1() {
-    test = extent.createTest("Register and Logout Test");
+    @Test
+    public void test1() {
+        test = extent.createTest("Register and Logout Test");
 
-    try {
-        homepagePage.clickAccountButton();
-        test.pass("Clicked account button");
+        try {
+            homepagePage.clickAccountButton();
+            test.pass("Clicked account button");
 
-        registerPage = homepagePage.clickRegisterButton();
-        test.pass("Clicked register button");
+            homepagePage.clickRegisterButton();
+            test.pass("Clicked register button");
 
-        registerPage.checkPageTitle();
-        test.pass("Checked page title");
+            registerPage.checkPageTitle();
+            test.pass("Checked page title");
 
-        registerPage.fillRegisterFields(globalVariables.first, globalVariables.last, globalVariables.email, globalVariables.pass, globalVariables.pass);
-        test.pass("Filled register form");
+            registerPage.fillRegisterFields(globalVariables.first, globalVariables.last, globalVariables.email,
+                    globalVariables.pass, globalVariables.pass);
+            test.pass("Filled register form");
 
-        dashboardPage = registerPage.clickRegisterButton();
-        test.pass("Submitted registration");
+            dashboardPage = registerPage.clickRegisterButton();
+            test.pass("Submitted registration");
 
-        dashboardPage.matchSuccessMessage();
-        test.pass("Matched success message");
+            dashboardPage.matchSuccessMessage();
+            test.pass("Matched success message");
 
-        dashboardPage.clickAccountButton();
-        dashboardPage.clickLogOut();
-        test.pass("Logged out");
+            dashboardPage.clickAccountButton();
+            dashboardPage.clickLogOut();
+            test.pass("Logged out");
 
-        // Mark final test result
-        test.pass("Test completed successfully");
-    } catch (Exception e) {
-        test.fail("Test failed with error: " + e.getMessage());
+            test.pass("Test completed successfully");
+        } catch (Exception e) {
+        String screenshotPath = captureScreenshot("test2_failure");
+        test.fail("Test Failed with Error: " + e.getMessage())
+            .addScreenCaptureFromPath(screenshotPath);
         e.printStackTrace();
-        throw e; // Optional: rethrow to fail the TestNG test too
+        throw e;
     }
-}
+    }
 
     @Test
-    public void test2(){
+    public void test2() {
         test = extent.createTest("Log In Check Test");
-        
-        dashboardPage =globalVariables.logIn();
-        test.pass("Log in Succes");
+        try {
+            globalVariables.logIn();
+            test.pass("Log in Succes");
 
-        dashboardPage.checkWelcomeMessage(globalVariables.first, globalVariables.last);
-        test.pass("Welcome Message Shown");
+            dashboardPage.checkWelcomeMessage(globalVariables.first, globalVariables.last);
+            test.pass("Welcome Message Shown");
 
-        dashboardPage.clickAccountButton();
-        test.pass("Account Button Clicked");
+            dashboardPage.clickAccountButton();
+            test.pass("Account Button Clicked");
 
-        dashboardPage.clickLogOut();
-        test.pass("Logged Out");
+            dashboardPage.clickLogOut();
+            test.pass("Logged Out");
+        } catch (Exception e) {
+            test.fail("Test Failed with Error: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
     }
-    
+
     @Test
-    public void test3(){
+    public void test3() {
         test = extent.createTest("Hover Check");
+        try {
+            globalVariables.logIn();
+            test.pass("Log In Succes");
 
-        dashboardPage =globalVariables.logIn();
-        test.pass("Log In Succes");
+            dashboardPage.hoverOnWomen();
+            test.pass("Hover Success");
 
-        womenPage=dashboardPage.hoverOnWomen();
-        test.pass("Hover Success");
-
-        womenPage.checkDifferenceInStyle();
-        test.pass("Style Changes Visible");
-    }
-
-    @Test 
-    public void test4(){
-        test = extent.createTest("Check Sale Style");
-
-        dashboardPage =globalVariables.logIn();
-        test.pass("Log In Success");
-
-        salePage= dashboardPage.hoverOnSale();
-        test.pass("Sale Page Opened");
-        
-        salePage.verifyOldPriceExistsInAllItems();
-        test.pass("Verified Old Price Shown");
-
-        salePage.verifySpecialPriceExistsInAllItems();
-        test.pass("Verified Special Price Shown");
-
-        salePage.checkOldPriceStyle();
-        test.pass("Checked Old Price Style");
-
-        salePage.checkSpecialPriceStyle();
-        test.pass("Checked Special Price Style");
+            womenPage.checkDifferenceInStyle();
+            test.pass("Style Changes Visible");
+        } catch (Exception e) {
+            test.fail("Test Failed With Error: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @Test
-    public void test5(){
+    public void test4() {
+        test = extent.createTest("Check Sale Style");
+        try {
+            globalVariables.logIn();
+            test.pass("Log In Success");
+
+            dashboardPage.hoverOnSale();
+            test.pass("Sale Page Opened");
+
+            salePage.verifyOldPriceExistsInAllItems();
+            test.pass("Verified Old Price Shown");
+
+            salePage.verifySpecialPriceExistsInAllItems();
+            test.pass("Verified Special Price Shown");
+
+            salePage.checkOldPriceStyle();
+            test.pass("Checked Old Price Style");
+
+            salePage.checkSpecialPriceStyle();
+            test.pass("Checked Special Price Style");
+        } catch (Exception e) {
+            test.fail("Test Failed With Error: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    @Test
+    public void test5() {
         test = extent.createTest("Check Men Style");
 
-        dashboardPage =globalVariables.logIn();
-        test.pass("Success Log In");
+        try {
+            globalVariables.logIn();
+            test.pass("Success Log In");
 
-        menPage = dashboardPage.hoverOnMale();
-        test.pass("Success Open Men Section");
+            dashboardPage.hoverOnMale();
+            test.pass("Success Open Men Section");
 
-        menPage.clickBlackColorOption();
-        test.pass("Black Color Option Selected");
+            menPage.clickBlackColorOption();
+            test.pass("Black Color Option Selected");
 
-        menPage.checkColorIsSelected();
-        test.pass("Color Style for Selected Elements shown");
+            menPage.checkColorIsSelected();
+            test.pass("Color Style for Selected Elements shown");
 
-        menPage.clickOnPrice();
-        test.pass("Checked Prices");
+            menPage.clickOnPrice();
+            test.pass("Checked Prices");
 
-        menPage.checkNoOfElement();
-        test.pass("Checked Number Of Elements");
+            menPage.checkNoOfElement();
+            test.pass("Checked Number Of Elements");
 
-        menPage.checkPricesOfElements();
-        test.pass("Checked Prices");
+            menPage.checkPricesOfElements();
+            test.pass("Checked Prices");
+        } catch (Exception e) {
+            test.fail("Test Failed With Error: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @Test
-    public void test6(){
+    public void test6() {
         test = extent.createTest("Check Women Filters");
 
-        dashboardPage =globalVariables.logIn();
-        test.pass("Success Log In");
+        try {
+            globalVariables.logIn();
+            test.pass("Success Log In");
 
-        womenPage = dashboardPage.hoverOnWomen();
-        test.pass("Success Open Women Section");
+            dashboardPage.hoverOnWomen();
+            test.pass("Success Open Women Section");
 
-        womenPage.sortByPrice();
-        test.pass("Sorted By Price");
+            womenPage.sortByPrice();
+            test.pass("Sorted By Price");
 
-        womenPage.checkPricesAreSorted();
-        test.pass("Prices are Sorted as Filter Says");
+            womenPage.checkPricesAreSorted();
+            test.pass("Prices are Sorted as Filter Says");
 
-        wishlistPage = womenPage.addFirstToWishlist();
-        test.pass("First Added to Wishlist");
+            womenPage.addFirstToWishlist();
+            test.pass("First Added to Wishlist");
 
-        wishlistPage.successToWishlist();
-        test.pass("Success Sent to Wishlist");
+            wishlistPage.successToWishlist();
+            test.pass("Success Sent to Wishlist");
 
-        womenPage = wishlistPage.goBackToWomenPage();
-        test.pass("Scroll Back To Women");
+            wishlistPage.goBackToWomenPage();
+            test.pass("Scroll Back To Women");
 
-        wishlistPage = womenPage.addSecondToWishlist();
-        test.pass("Second Added to Wishlist");
+            womenPage.addSecondToWishlist();
+            test.pass("Second Added to Wishlist");
 
-        wishlistPage.successToWishlist();
-        test.pass("Success Sent to Wishlist");
+            wishlistPage.successToWishlist();
+            test.pass("Success Sent to Wishlist");
 
-        womenPage = wishlistPage.goBackToWomenPage();
-        test.pass("Scroll Back To Women");
+            wishlistPage.goBackToWomenPage();
+            test.pass("Scroll Back To Women");
 
-        wishlistPage = womenPage.checkWishlistItems();
-        test.pass("Checked Wishlist Message");
+            womenPage.checkWishlistItems();
+            test.pass("Checked Wishlist Message");
+        } catch (Exception e) {
+            test.fail("Test Failed With Error: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
+
     }
 
     @Test
-    public void test7(){
+    public void test7() {
         test = extent.createTest("Adding Product to Cart");
+        try {
+            globalVariables.wishlist();
+            test.pass("Scrolled to Wishlist");
 
-        wishlistPage =globalVariables.wishlist();
-        test.pass("Scrolled to Wishlist");
+            wishlistPage.addCart();
+            test.pass("Cart Button Clicked");
 
-        productInfoPage = wishlistPage.addCart();
-        test.pass("Cart Button Clicked");
+            productInfoPage.chooseBlackColor();
+            test.pass("Black Color Selectd");
 
-        productInfoPage.chooseBlackColor();
-        test.pass("Black Color Selectd");
+            productInfoPage.chooseMSize();
+            test.pass("Choosed Size M");
 
-        productInfoPage.chooseMSize();
-        test.pass("Choosed Size M");
+            productInfoPage.addToCart();
+            test.pass("Click Add to Cart");
 
-        cartPage = productInfoPage.addToCart();
-        test.pass("Click Add to Cart");
+            cartPage.clickAccountButton();
+            test.pass("Account Button Clicked");
 
-        cartPage.clickAccountButton();
-        test.pass("Account Button Clicked");
+            cartPage.clickWishlist();
+            test.pass("Click Wishlist");
 
-        wishlistPage = cartPage.clickWishlist();
-        test.pass("Click Wishlist");
+            wishlistPage.addCart();
+            test.pass("Cart Button Clicked");
 
-        productInfoPage = wishlistPage.addCart();
-        test.pass("Cart Button Clicked");
+            productInfoPage.chooseWhiteColor();
+            test.pass("White Color Selectd");
 
-        productInfoPage.chooseWhiteColor();
-        test.pass("White Color Selectd");
+            productInfoPage.chooseMSize();
+            test.pass("Choosed Size M");
 
-        productInfoPage.chooseMSize();
-        test.pass("Choosed Size M");
+            productInfoPage.addToCart();
+            test.pass("Click Add to Cart");
 
-        cartPage = productInfoPage.addToCart();
-        test.pass("Click Add to Cart");
+            cartPage.updateQuantity();
+            test.pass("Updated Quantity of Element");
 
-        cartPage.updateQuantity();
-        test.pass("Updated Quantity of Element");
-
-        cartPage.checkCosts();
-        test.pass("Checked Elements Prices");
+            cartPage.checkCosts();
+            test.pass("Checked Elements Prices");
+        } catch (Exception e) {
+            test.fail("Test Failed With Error: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     @Test
-    public void test8(){
+    public void test8() {
         test = extent.createTest("Delete Cart List");
+        try {
+            globalVariables.cart();
+            test.pass("Scrolled to Cart");
 
-        cartPage =globalVariables.cart();
-        test.pass("Scrolled to Cart");
+            cartPage.deleteFirstAndCheck();
+            test.pass("Deleted First Element");
 
-        cartPage.deleteFirstAndCheck();
-        test.pass("Deleted First Element");
+            cartPage.deleteItem();
+            test.pass("Deleted rest of Elements");
 
-        cartPage.deleteItem();
-        test.pass("Deleted rest of Elements");
-
-        cartPage.checkEmptyMessage();
-        test.pass("Cart is Empty Message Found");
+            cartPage.checkEmptyMessage();
+            test.pass("Cart is Empty Message Found");
+        } catch (Exception e) {
+            test.fail("Test Failed With Error: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
     }
 }

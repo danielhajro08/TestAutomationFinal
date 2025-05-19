@@ -3,6 +3,8 @@ package pageMethods;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -92,8 +94,9 @@ public class CartPage {
         wait.until(ExpectedConditions.visibilityOf(cartPageElement.deleteButton));
         int before = getCartLength();
         cartPageElement.deleteButton.click();
-        wait.until(ExpectedConditions.visibilityOfAllElements(cartPageElement.productList));
-        int after = getCartLength();
+        List<WebElement> products = driver.findElements(By.cssSelector("#shopping-cart-table >tbody>tr"));
+        wait.until(ExpectedConditions.visibilityOfAllElements(products));
+        int after = products.size();
         Assert.assertEquals(before,after+1,"Not Same");
     }
 

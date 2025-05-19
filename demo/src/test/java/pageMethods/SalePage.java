@@ -70,7 +70,7 @@ public class SalePage {
                 String color = element.getCssValue("color");
                 String decoration = element.getCssValue("text-decoration");
                 Assert.assertEquals(color, "rgba(160, 160, 160, 1)", "Color doesnt match");
-                 Assert.assertTrue(decoration.contains("line-through"), "Expected line-through but got: " + decoration + " at index: " + index);
+                Assert.assertTrue(decoration.contains("line-through"), "Expected line-through but got: " + decoration + " at index: " + index);
             } catch (NoSuchElementException e) {
                 Assert.fail("Missing styles in sale item at index: " + index);
             }
@@ -85,11 +85,12 @@ public class SalePage {
                 String color = element.getCssValue("color");
                 String decoration = element.getCssValue("text-decoration");
                 Assert.assertEquals(color, "rgba(51, 153, 204, 1)", "Color doesnt match");
-                 Assert.assertTrue(decoration.contains("none"), "Expected none but got: " + decoration + " at index: " + index);
+                Assert.assertTrue(decoration.contains("none"), "Expected none but got: " + decoration + " at index: " + index);
             } catch (NoSuchElementException e) {
                 Assert.fail("Missing styles in sale item at index: " + index);
             }
             index++;
+            //System.out.println(index);
         }
     }
 

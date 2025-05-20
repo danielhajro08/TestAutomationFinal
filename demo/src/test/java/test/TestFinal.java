@@ -96,7 +96,7 @@ public class TestFinal extends BaseTest {
 
             test.pass("Test completed successfully");
         } catch (Exception e) {
-        String screenshotPath = captureScreenshot("test2_failure");
+        String screenshotPath = captureScreenshot("test1_failure");
         test.fail("Test Failed with Error: " + e.getMessage())
             .addScreenCaptureFromPath(screenshotPath);
         e.printStackTrace();
@@ -141,7 +141,7 @@ public class TestFinal extends BaseTest {
             womenPage.checkDifferenceInStyle();
             test.pass("Style Changes Visible");
         } catch (Exception e) {
-        String screenshotPath = captureScreenshot("test2_failure");
+        String screenshotPath = captureScreenshot("test3_failure");
         test.fail("Test Failed with Error: " + e.getMessage())
             .addScreenCaptureFromPath(screenshotPath);
         e.printStackTrace();
@@ -171,7 +171,7 @@ public class TestFinal extends BaseTest {
             salePage.checkSpecialPriceStyle();
             test.pass("Checked Special Price Style");
         }catch (Exception e) {
-        String screenshotPath = captureScreenshot("test2_failure");
+        String screenshotPath = captureScreenshot("test4_failure");
         test.fail("Test Failed with Error: " + e.getMessage())
             .addScreenCaptureFromPath(screenshotPath);
         e.printStackTrace();
@@ -205,7 +205,7 @@ public class TestFinal extends BaseTest {
             menPage.checkPricesOfElements();
             test.pass("Checked Prices");
         } catch (Exception e) {
-        String screenshotPath = captureScreenshot("test2_failure");
+        String screenshotPath = captureScreenshot("test5_failure");
         test.fail("Test Failed with Error: " + e.getMessage())
             .addScreenCaptureFromPath(screenshotPath);
         e.printStackTrace();
@@ -251,7 +251,7 @@ public class TestFinal extends BaseTest {
             womenPage.checkWishlistItems();
             test.pass("Checked Wishlist Message");
         } catch (Exception e) {
-        String screenshotPath = captureScreenshot("test2_failure");
+        String screenshotPath = captureScreenshot("test6_failure");
         test.fail("Test Failed with Error: " + e.getMessage())
             .addScreenCaptureFromPath(screenshotPath);
         e.printStackTrace();
@@ -303,7 +303,7 @@ public class TestFinal extends BaseTest {
             cartPage.checkCosts();
             test.pass("Checked Elements Prices");
         } catch (Exception e) {
-        String screenshotPath = captureScreenshot("test2_failure");
+        String screenshotPath = captureScreenshot("test7_failure");
         test.fail("Test Failed with Error: " + e.getMessage())
             .addScreenCaptureFromPath(screenshotPath);
         e.printStackTrace();
@@ -327,7 +327,7 @@ public class TestFinal extends BaseTest {
             cartPage.checkEmptyMessage();
             test.pass("Cart is Empty Message Found");
         } catch (Exception e) {
-        String screenshotPath = captureScreenshot("test2_failure");
+        String screenshotPath = captureScreenshot("test8_failure");
         test.fail("Test Failed with Error: " + e.getMessage())
             .addScreenCaptureFromPath(screenshotPath);
         e.printStackTrace();

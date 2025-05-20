@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -90,15 +91,32 @@ public class CartPage {
         return size;
     }
 
-    public void deleteFirstAndCheck(){
-        wait.until(ExpectedConditions.visibilityOf(cartPageElement.deleteButton));
-        int before = getCartLength();
-        cartPageElement.deleteButton.click();
-        List<WebElement> products = driver.findElements(By.cssSelector("#shopping-cart-table >tbody>tr"));
-        wait.until(ExpectedConditions.visibilityOfAllElements(products));
-        int after = products.size();
-        Assert.assertEquals(before,after+1,"Not Same");
+    public void deleteFirstAndCheck() {
+    int attempts = 0;
+    while (attempts < 2) {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(cartPageElement.deleteButton));
+            int before = getCartLength();
+            System.out.println("before: " + before);
+
+            cartPageElement.deleteButton.click();
+
+            List<WebElement> products = driver.findElements(By.cssSelector("#shopping-cart-table >tbody>tr"));
+            wait.until(ExpectedConditions.visibilityOfAllElements(products));
+            int after = products.size();
+            System.out.println("after: " + after);
+
+            Assert.assertEquals(before, after + 1, "Not Same");
+            break;
+        } catch (StaleElementReferenceException e) {
+            attempts++;
+            if (attempts == 2) {
+                Assert.fail("StaleElementReferenceException in deleteFirstAndCheck()");
+            }
+        }
     }
+}
+
 
     public void deleteItem(){
         int length = getCartLength();

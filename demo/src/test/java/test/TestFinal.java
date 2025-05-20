@@ -120,10 +120,12 @@ public class TestFinal extends BaseTest {
             dashboardPage.clickLogOut();
             test.pass("Logged Out");
         } catch (Exception e) {
-            test.fail("Test Failed with Error: " + e.getMessage());
-            e.printStackTrace();
-            throw e;
-        }
+        String screenshotPath = captureScreenshot("test2_failure");
+        test.fail("Test Failed with Error: " + e.getMessage())
+            .addScreenCaptureFromPath(screenshotPath);
+        e.printStackTrace();
+        throw e;
+    }
     }
 
     @Test
@@ -139,10 +141,12 @@ public class TestFinal extends BaseTest {
             womenPage.checkDifferenceInStyle();
             test.pass("Style Changes Visible");
         } catch (Exception e) {
-            test.fail("Test Failed With Error: " + e.getMessage());
-            e.printStackTrace();
-            throw e;
-        }
+        String screenshotPath = captureScreenshot("test2_failure");
+        test.fail("Test Failed with Error: " + e.getMessage())
+            .addScreenCaptureFromPath(screenshotPath);
+        e.printStackTrace();
+        throw e;
+    }
     }
 
     @Test
@@ -166,11 +170,13 @@ public class TestFinal extends BaseTest {
 
             salePage.checkSpecialPriceStyle();
             test.pass("Checked Special Price Style");
-        } catch (Exception e) {
-            test.fail("Test Failed With Error: " + e.getMessage());
-            e.printStackTrace();
-            throw e;
-        }
+        }catch (Exception e) {
+        String screenshotPath = captureScreenshot("test2_failure");
+        test.fail("Test Failed with Error: " + e.getMessage())
+            .addScreenCaptureFromPath(screenshotPath);
+        e.printStackTrace();
+        throw e;
+    }
     }
 
     @Test
@@ -199,10 +205,12 @@ public class TestFinal extends BaseTest {
             menPage.checkPricesOfElements();
             test.pass("Checked Prices");
         } catch (Exception e) {
-            test.fail("Test Failed With Error: " + e.getMessage());
-            e.printStackTrace();
-            throw e;
-        }
+        String screenshotPath = captureScreenshot("test2_failure");
+        test.fail("Test Failed with Error: " + e.getMessage())
+            .addScreenCaptureFromPath(screenshotPath);
+        e.printStackTrace();
+        throw e;
+    }
     }
 
     @Test
@@ -243,10 +251,12 @@ public class TestFinal extends BaseTest {
             womenPage.checkWishlistItems();
             test.pass("Checked Wishlist Message");
         } catch (Exception e) {
-            test.fail("Test Failed With Error: " + e.getMessage());
-            e.printStackTrace();
-            throw e;
-        }
+        String screenshotPath = captureScreenshot("test2_failure");
+        test.fail("Test Failed with Error: " + e.getMessage())
+            .addScreenCaptureFromPath(screenshotPath);
+        e.printStackTrace();
+        throw e;
+    }
 
     }
 
@@ -293,10 +303,12 @@ public class TestFinal extends BaseTest {
             cartPage.checkCosts();
             test.pass("Checked Elements Prices");
         } catch (Exception e) {
-            test.fail("Test Failed With Error: " + e.getMessage());
-            e.printStackTrace();
-            throw e;
-        }
+        String screenshotPath = captureScreenshot("test2_failure");
+        test.fail("Test Failed with Error: " + e.getMessage())
+            .addScreenCaptureFromPath(screenshotPath);
+        e.printStackTrace();
+        throw e;
+    }
     }
 
     @Test
@@ -315,9 +327,11 @@ public class TestFinal extends BaseTest {
             cartPage.checkEmptyMessage();
             test.pass("Cart is Empty Message Found");
         } catch (Exception e) {
-            test.fail("Test Failed With Error: " + e.getMessage());
-            e.printStackTrace();
-            throw e;
-        }
+        String screenshotPath = captureScreenshot("test2_failure");
+        test.fail("Test Failed with Error: " + e.getMessage())
+            .addScreenCaptureFromPath(screenshotPath);
+        e.printStackTrace();
+        throw e;
+    }
     }
 }

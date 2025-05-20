@@ -18,7 +18,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
 public class BaseTest {
-    protected static ExtentReports extent;
+    public static ExtentReports extent;
     protected static ExtentTest test;
     protected static WebDriver driver;
 
@@ -39,7 +39,7 @@ public class BaseTest {
         }
     }
 
-    public String captureScreenshot(String screenshotName) {
+    public static String captureScreenshot(String screenshotName)  {
         String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String path = "test-output/screenshots/" + screenshotName + "_" + timestamp + ".png";
 

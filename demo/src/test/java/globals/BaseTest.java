@@ -42,8 +42,8 @@ public class BaseTest {
     public static String captureScreenshot(String screenshotName)  {
         String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String path = "test-output/screenshots/" + screenshotName + "_" + timestamp + ".png";
+        String relativePath = "screenshots/" + screenshotName + "_" + timestamp + ".png";
 
-        // Ensure the folder exists
         File screenshotDir = new File("test-output/screenshots/");
         if (!screenshotDir.exists()) {
             screenshotDir.mkdirs();
@@ -56,6 +56,6 @@ public class BaseTest {
             e.printStackTrace();
         }
 
-        return path;
+         return relativePath;
     }
 }

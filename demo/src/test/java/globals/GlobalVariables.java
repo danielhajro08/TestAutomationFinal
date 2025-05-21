@@ -50,7 +50,7 @@ public class GlobalVariables {
 
     public String first = "Andi";
     public String last = "Hoxha";
-    public String email = "andi91@gmail.com";
+    public String email = "andi910@gmail.com";
     public String pass = "asdqwe123";
 
     public DashboardPage logIn(){

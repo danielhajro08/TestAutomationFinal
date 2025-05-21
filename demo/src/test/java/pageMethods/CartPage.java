@@ -91,28 +91,41 @@ public class CartPage {
         return size;
     }
 
-    public void deleteFirstAndCheck() {
+  public void deleteFirstAndCheck() {
     int attempts = 0;
     while (attempts < 2) {
         try {
-            wait.until(ExpectedConditions.visibilityOf(cartPageElement.deleteButton));
-            int before = getCartLength();
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#shopping-cart-table > tbody > tr")));
+
+            List<WebElement> cartRows = driver.findElements(By.cssSelector("#shopping-cart-table > tbody > tr"));
+            int before = cartRows.size();
             System.out.println("before: " + before);
 
-            cartPageElement.deleteButton.click();
+            if (before == 0) {
+                Assert.fail("Cart is empty, nothing to delete.");
+            }
 
-            List<WebElement> products = driver.findElements(By.cssSelector("#shopping-cart-table >tbody>tr"));
-            wait.until(ExpectedConditions.visibilityOfAllElements(products));
-            int after = products.size();
+            WebElement deleteBtn = cartRows.get(0).findElement(By.xpath("(//a[contains(@class,'btn-remove2')])[2]")); 
+            wait.until(ExpectedConditions.elementToBeClickable(deleteBtn)).click();
+
+            wait.until(ExpectedConditions.numberOfElementsToBeLessThan(
+                By.cssSelector("#shopping-cart-table > tbody > tr"), before
+            ));
+
+            int after = driver.findElements(By.cssSelector("#shopping-cart-table > tbody > tr")).size();
             System.out.println("after: " + after);
 
             Assert.assertEquals(before, after + 1, "Not Same");
             break;
+
         } catch (StaleElementReferenceException e) {
             attempts++;
             if (attempts == 2) {
                 Assert.fail("StaleElementReferenceException in deleteFirstAndCheck()");
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail("Unhandled error: " + e.getMessage());
         }
     }
 }

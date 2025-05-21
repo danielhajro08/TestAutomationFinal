@@ -35,7 +35,7 @@ WebDriver driver;
     @FindBy(css = "#shopping-cart-table >tbody>tr")
     public List<WebElement> productList;
 
-    @FindBy(xpath = "(//a[@title='Remove Item'])[2]")
+    @FindBy(xpath = "(//a[contains(@class,'btn-remove2')])[2]")
     public WebElement deleteButton;
 
     @FindBy(xpath = "(//div[contains(@class,'cart-empty')]/p)[1]")
